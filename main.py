@@ -136,9 +136,10 @@ def guardar_alertas(alertas):
 
 def agregar_alertas_pendientes(nuevas):
     existentes = cargar_alertas()
-    keys = {(a["fecha"], a["home"], a["away"]) for a in existentes}
+    # FIX: usar IDs numéricos como clave única, los nombres pueden variar entre llamadas a la API
+    keys = {(a["fecha"], a["home_id"], a["away_id"]) for a in existentes}
     for a in nuevas:
-        if (a["fecha"], a["home"], a["away"]) not in keys:
+        if (a["fecha"], a["home_id"], a["away_id"]) not in keys:
             a["resultado"] = None
             existentes.append(a)
     guardar_alertas(existentes)
